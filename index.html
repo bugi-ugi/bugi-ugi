@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Буги-Уги — Слушать онлайн / Скачать</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <style>
     :root { --bg:#0a0a0a; --fg:#fff; --accent:#fff; --ink:#000; --muted:#bdbdbd; --card:#111; }
     html,body { height:100%; margin:0; background:var(--bg); color:var(--fg);
@@ -214,5 +215,43 @@
     document.addEventListener('keydown', (e) => { if (e.key==='ArrowLeft') { showPanel('albums'); $tabAlbums.focus(); }
       if (e.key==='ArrowRight') { showPanel('singles'); $tabSingles.focus(); } });
   </script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const allPlayers = () => Array.from(document.querySelectorAll('.release audio'));
+
+  function pauseOthers(current) {
+    allPlayers().forEach(a => { if (a !== current) { a.pause(); } });
+  }
+
+  function playNextFrom(current) {
+    const release = current.closest('.release');
+    const inRelease = Array.from(release.querySelectorAll('audio'));
+    const i = inRelease.indexOf(current);
+    let next = inRelease[i + 1];
+
+    if (!next) {
+      const releases = Array.from(release.parentElement.querySelectorAll('.release'));
+      const rIdx = releases.indexOf(release);
+      const nextRelease = releases[rIdx + 1];
+      if (nextRelease) next = nextRelease.querySelector('audio');
+    }
+
+    if (next) {
+      const details = next.closest('details');
+      if (details) details.open = true;
+      pauseOthers(next);
+      next.play().catch(() => {});
+      next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  allPlayers().forEach(p => {
+    p.addEventListener('play', () => pauseOthers(p));
+    p.addEventListener('ended', () => playNextFrom(p));
+  });
+});
+</script>
+  
 </body>
 </html>
