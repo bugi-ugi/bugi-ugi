@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Буги-Уги — Слушать онлайн / Скачать</title>
+  <style>
+    :root { --bg:#0a0a0a; --fg:#fff; --accent:#fff; --ink:#000; --muted:#bdbdbd; --card:#111; }
+    html,body { height:100%; margin:0; background:var(--bg); color:var(--fg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; letter-spacing:.2px; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none;
+      background:repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 2px, transparent 3px);
+      mix-blend-mode:soft-light; opacity:.15; }
+    .container { max-width:880px; margin:0 auto; padding:48px 20px 100px; }
+    .title { font-size:clamp(42px,8vw,84px); line-height:1; margin:0 0 8px; text-transform:uppercase; letter-spacing:2px; }
+    .subtitle { font-size:clamp(16px,2.5vw,22px); color:var(--muted); margin:0 0 28px; }
+    .tabs { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:28px 0 18px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; width:100%; padding:14px 18px;
+      background:var(--accent); color:var(--ink); border:2px solid var(--accent); border-radius:10px; text-decoration:none;
+      font-weight:700; text-transform:uppercase; letter-spacing:1px; cursor:pointer;
+      transition:transform .08s ease, filter .15s ease, background .15s ease; box-shadow:0 6px 0 rgba(255,255,255,.25); }
+    .btn:hover { transform:translateY(-1px); filter:contrast(105%); }
+    .btn:active { transform:translateY(0); box-shadow:0 2px 0 rgba(255,255,255,.25); }
+    .section { display:none; } .section.active { display:block; }
+    .release { background:var(--card); border:1px solid #1f1f1f; border-radius:14px; padding:14px 14px 6px; margin:14px 0; }
+    details.release > summary { list-style:none; cursor:pointer; user-select:none; outline:none; display:flex; align-items:baseline; gap:10px; }
+    details.release > summary::-webkit-details-marker { display:none; }
+    .badge { display:inline-block; padding:3px 8px; border-radius:20px; background:#fff; color:#000; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+    .release-title { font-size:18px; font-weight:700; margin:0; }
+    .release-meta { color:var(--muted); font-size:13px; margin-left:auto; }
+    .tracklist { margin:10px 0 8px; padding-left:0; list-style:none; }
+    .track { padding:10px 0; border-top:1px dashed #2a2a2a; }
+    .track:first-child { border-top:0; }
+    .track-title { display:block; margin:0 0 6px; font-weight:600; }
+    .audio { width:100%; }
+    .dl { display:inline-flex; align-items:center; gap:8px; margin:10px 0 14px; padding:10px 14px; background:var(--accent); color:var(--ink);
+      border-radius:8px; border:2px solid var(--accent); text-decoration:none; font-weight:700; }
+    .dl:hover { filter:contrast(105%); }
+    .site-footer { text-align:center; color: var(--muted); margin-top:40px; font-size:12px; }
+    .site-footer a { color:#fff; text-decoration: underline; }
+    @media (max-width:540px) { .tabs { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1 class="title">Буги-Уги</h1>
+    <p class="subtitle">Слушать онлайн / Скачать</p>
+    <div class="tabs" role="tablist" aria-label="Категории релизов">
+      <button id="tab-albums" class="btn" role="tab" aria-controls="panel-albums" aria-selected="true">Альбомы</button>
+      <button id="tab-singles" class="btn" role="tab" aria-controls="panel-singles" aria-selected="false">Синглы</button>
+    </div>
+    <section class="sections">
+      <div id="panel-albums" class="section active" role="tabpanel" aria-labelledby="tab-albums"></div>
+      <div id="panel-singles" class="section" role="tabpanel" aria-labelledby="tab-singles"></div>
+    </section>
+    <footer class="site-footer">
+      <div>© Буги-Уги</div>
+      <div>Что-то не работает? Напишите через <a href="https://docs.google.com/forms/d/e/1FAIpQLSf_n5Xa9Rm0a3iB8kXWULL47N1N-prIhUoXaQQr5SwzaIve_w/viewform?usp=dialog" target="_blank" rel="noopener">форму</a></div>
+    </footer>
+  </main>
+  <script>
+    // DATA (newest first) — links use drive.usercontent.google.com for streaming
+    const DATA = {
+      "albums": [
+        {
+          "title": "Брат/Брут",
+          "year": 2025,
+          "zip": "https://drive.usercontent.google.com/uc?id=1ayQbPrOJcPBVTdu3y-3rxirhbf7wHWnM&export=download",
+          "tracks": [
+            { "title": "Ничего нового", "src": "https://drive.usercontent.google.com/uc?id=1z_X4vMDibipMK3rGU3LtwZqk-gBekgs9&export=download" },
+            { "title": "На Луну", "src": "https://drive.usercontent.google.com/uc?id=12RrVzUmMFZ3o4FQ6if_Xl5OCByMos-dM&export=download" },
+            { "title": "В свободном падении", "src": "https://drive.usercontent.google.com/uc?id=12-P9iRx3nI5mF3HqSQoh5pRB9fhYVf1d&export=download" },
+            { "title": "Прекрасная девушка будущего", "src": "https://drive.usercontent.google.com/uc?id=1B6ortKck7FmnNrSPiVjyQ-lOiG_iGAjq&export=download" },
+            { "title": "БГВМЧ", "src": "https://drive.usercontent.google.com/uc?id=18hLXV1BuypnFyyrVmdTyRZO3Z0mcSKVr&export=download" },
+            { "title": "Полюби меня мёртвым", "src": "https://drive.usercontent.google.com/uc?id=1fvUg4KLOkmVVhLyQR0B3zPg8bFmxg7xi&export=download" },
+            { "title": "Шедевр искусства", "src": "https://drive.usercontent.google.com/uc?id=1RM8O1IGXP0jKFcKsHrUISgA0QAPeRtS2&export=download" },
+            { "title": "Майя", "src": "https://drive.usercontent.google.com/uc?id=18FjNnsK8nuPF9luKvGJIoULqhSWJMTcJ&export=download" },
+            { "title": "Как всё начиналось", "src": "https://drive.usercontent.google.com/uc?id=1BERJ4KCZ-TJCAVAuDuy8Qe9PZV_-yNCh&export=download" },
+            { "title": "Comme ci, comme ça", "src": "https://drive.usercontent.google.com/uc?id=15zZYFl0GdN22KEeesacsaCpgectLFEZ0&export=download" }
+          ]
+        },
+        {
+          "title": "Просроченные птичьи права",
+          "year": 2024,
+          "zip": "https://drive.usercontent.google.com/uc?id=1csBxg7R0pXbAPs1aXPrX2M4XfsItZzR2&export=download",
+          "tracks": [
+            { "title": "До умопомрачения", "src": "https://drive.usercontent.google.com/uc?id=1Umd6Et7fMLO2EulnJ5ZrjLLXHh8QyCeE&export=download" },
+            { "title": "Не виновата", "src": "https://drive.usercontent.google.com/uc?id=1Y-Viv4aLXIGva7RtnieUI0LcKati5xRs&export=download" },
+            { "title": "Люди на небе", "src": "https://drive.usercontent.google.com/uc?id=1N7XPUULuwotKdae5aLmv2q_eQgV9eYCN&export=download" },
+            { "title": "Отойди", "src": "https://drive.usercontent.google.com/uc?id=1UqQdu6U-Rx0GEHOteMdyYSlThYZCQJG9&export=download" },
+            { "title": "Дискобой", "src": "https://drive.usercontent.google.com/uc?id=15K1KQKQxatC6AKCpcssfoeuzeVI8USHc&export=download" },
+            { "title": "Что будет с нами", "src": "https://drive.usercontent.google.com/uc?id=1NzYQe7MYRmzhCtj7dlFQWV5J3TkPIZry&export=download" },
+            { "title": "Глупости", "src": "https://drive.usercontent.google.com/uc?id=13ySO8kFlfdE4c9fCOrHIKy9hIytiyzxa&export=download" },
+            { "title": "В глобальном смысле", "src": "https://drive.usercontent.google.com/uc?id=16npz7v4FysgIRQY6ydJ9mPCmRutYBvag&export=download" }
+          ]
+        }
+      ],
+      "singles": [
+        {
+          "title": "Герои",
+          "year": 2025,
+          "zip": "https://drive.usercontent.google.com/uc?id=1bYVVSnCyNUi6E0Pq5lS6BZQb2Ii3upsy&export=download",
+          "tracks": [
+            { "title": "Труп", "src": "https://drive.usercontent.google.com/uc?id=1xoJs7Q9avZjq_qKHttH7SGfE1MqrsthE&export=download" },
+            { "title": "Сообщник", "src": "https://drive.usercontent.google.com/uc?id=1lHyiT-3ktuFHsTXI6fpLa66VoACIrQJe&export=download" }
+          ]
+        },
+        {
+          "title": "Водой по вилам",
+          "year": 2025,
+          "zip": "https://drive.usercontent.google.com/uc?id=1rw3VlItwJe2KJw_2ducbzb-FbNGkndc4&export=download",
+          "tracks": [
+            { "title": "Рокировка", "src": "https://drive.usercontent.google.com/uc?id=1k0saS0i5HlcC3ML2zFoEjIxzI-CfbnRI&export=download" },
+            { "title": "Если", "src": "https://drive.usercontent.google.com/uc?id=1E1gycCdB36oTOqpUpmg4003t69LOzCoc&export=download" }
+          ]
+        },
+        {
+          "title": "Изнанка",
+          "year": 2025,
+          "zip": "https://drive.usercontent.google.com/uc?id=1_qSHLKrfN6s0Kg6U2az1_4PJe5kHtOv4&export=download",
+          "tracks": [
+            { "title": "По сослагательной", "src": "https://drive.usercontent.google.com/uc?id=1-siZUohMUVjcoOTkXwjrpNeU5dpDh856&export=download" },
+            { "title": "Элегия", "src": "https://drive.usercontent.google.com/uc?id=1BjJpWQjO3L0IxOnucCBQHHqR67J0dRJL&export=download" }
+          ]
+        },
+        {
+          "title": "В свободном падении",
+          "year": 2025,
+          "zip": "https://drive.usercontent.google.com/uc?id=1gSfVmAQa9MFkZxI_O5_GfmtXNvVWNvAb&export=download",
+          "tracks": [
+            { "title": "В свободном падении", "src": "https://drive.usercontent.google.com/uc?id=1q2Nb_mVBXTQk6BrdCuKDkztjDBSULpqw&export=download" }
+          ]
+        },
+        {
+          "title": "БГВМЧ",
+          "year": 2025,
+          "zip": "https://drive.usercontent.google.com/uc?id=1zHJwIsqgGwcuh0DLumsnZAECNhpEkOg3&export=download",
+          "tracks": [
+            { "title": "БГВМЧ", "src": "https://drive.usercontent.google.com/uc?id=1fa31JG0JgPSGuei275ZGnpZASkdRVFp-&export=download" }
+          ]
+        },
+        {
+          "title": "Разлечусь",
+          "year": 2024,
+          "zip": "https://drive.usercontent.google.com/uc?id=1YY3tl85XGliD_B0IWOa8v3nMS-zkiPJa&export=download",
+          "tracks": [
+            { "title": "Разлечусь", "src": "https://drive.usercontent.google.com/uc?id=1P4LAMWouJzYeDDePSPPsrrxRhvXvrYq-&export=download" }
+          ]
+        },
+        {
+          "title": "Между делом",
+          "year": 2024,
+          "zip": "https://drive.usercontent.google.com/uc?id=1Fqc4ouw9K2anj4XmXFUsVGbmBhw7Ci_5&export=download",
+          "tracks": [
+            { "title": "Между делом", "src": "https://drive.usercontent.google.com/uc?id=14pY1By7fa4maMlglMPJMVZc5WpfGlrU_&export=download" }
+          ]
+        },
+        {
+          "title": "Мелодия поломанного лифта",
+          "year": 2024,
+          "zip": "https://drive.usercontent.google.com/uc?id=16k87kKmv-OQyG7f_22sTv9f55zbM261z&export=download",
+          "tracks": [
+            { "title": "Мелодия поломанного лифта", "src": "https://drive.usercontent.google.com/uc?id=1Z4h-39csxHJOgjWx8A4OzT3hx1T02TVJ&export=download" }
+          ]
+        }
+      ]
+    };
+
+    const $albumsPanel = document.getElementById('panel-albums');
+    const $singlesPanel = document.getElementById('panel-singles');
+    const $tabAlbums = document.getElementById('tab-albums');
+    const $tabSingles = document.getElementById('tab-singles');
+
+    function h(tag, attrs = {}, children = []) { const el = document.createElement(tag);
+      for (const [k,v] of Object.entries(attrs)) { if (k==='class') el.className=v;
+        else if (k==='dataset') Object.assign(el.dataset,v);
+        else if (k.startsWith('on') && typeof v==='function') el.addEventListener(k.slice(2), v);
+        else if (v!==null && v!==undefined) el.setAttribute(k,v);}
+      children.forEach(ch => { if (typeof ch==='string') el.appendChild(document.createTextNode(ch)); else if (ch) el.appendChild(ch); });
+      return el; }
+
+    function renderReleaseCard(release, kind) { const details = h('details', { class: 'release' });
+      const summary = h('summary', {}, [
+        h('span', { class: 'badge' }, [ kind === 'album' ? 'Альбом' : 'Сингл' ]),
+        h('h3', { class: 'release-title' }, [ release.title ]),
+        h('span', { class: 'release-meta' }, [ String(release.year || '') ])
+      ]);
+      details.appendChild(summary);
+      const list = h('ul', { class: 'tracklist' });
+      (release.tracks || []).forEach(t => { const li = h('li', { class: 'track' });
+        li.appendChild(h('span', { class: 'track-title' }, [ t.title ]));
+        const audio = h('audio', { class: 'audio', controls: true, preload: 'none', crossorigin: 'anonymous' });
+        const src = h('source', { src: t.src, type: guessType(t.src) });
+        audio.appendChild(src); audio.appendChild(document.createTextNode('Ваш браузер не поддерживает аудио.'));
+        li.appendChild(audio); list.appendChild(li); });
+      const dl = h('a', { class: 'dl', href: release.zip || '#', download: '' }, [ 'Скачать' ]);
+      details.appendChild(list); details.appendChild(dl); return details; }
+
+    function guessType(url = '') { const ext = url.split('?')[0].split('.').pop().toLowerCase();
+      if (ext==='mp3') return 'audio/mpeg'; if (ext==='wav') return 'audio/wav'; if (ext==='ogg'||ext==='oga') return 'audio/ogg'; return 'audio/mpeg'; }
+
+    function render() { $albumsPanel.innerHTML=''; $singlesPanel.innerHTML='';
+      DATA.albums.forEach(a => $albumsPanel.appendChild(renderReleaseCard(a, 'album')));
+      DATA.singles.forEach(s => $singlesPanel.appendChild(renderReleaseCard(s, 'single'))); }
+    render();
+
+    function showPanel(which) { const isAlbums = which==='albums';
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(isAlbums ? 'panel-albums' : 'panel-singles').classList.add('active');
+      $tabAlbums.setAttribute('aria-selected', String(isAlbums));
+      $tabSingles.setAttribute('aria-selected', String(!isAlbums)); }
+    $tabAlbums.addEventListener('click', () => showPanel('albums'));
+    $tabSingles.addEventListener('click', () => showPanel('singles'));
+    document.addEventListener('keydown', (e) => { if (e.key==='ArrowLeft') { showPanel('albums'); $tabAlbums.focus(); }
+      if (e.key==='ArrowRight') { showPanel('singles'); $tabSingles.focus(); } });
+  </script>
+</body>
+</html>
